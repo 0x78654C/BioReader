@@ -14,7 +14,7 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="BioConvert" Content="Bionic Reader Convert" HorizontalAlignment="Left" Margin="53,388,0,0" VerticalAlignment="Top" Click="BioConvert_Click"/>
+        <Button x:Name="BioConvert" Content="Bionic Reader Convert" Margin="54,0,559,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18"/>
 
     </Grid>
 </Window>
