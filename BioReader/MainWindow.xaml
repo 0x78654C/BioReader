@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <RichTextBox x:Name="bioTextConvertor" TextChanged="bioTextConvertor_TextChanged" Margin="0,0,0,46">
+        <RichTextBox FontSize="25" x:Name="bioTextConvertor" TextChanged="bioTextConvertor_TextChanged" Margin="0,0,0,60">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="RichTextBox"/>
+                    <Run Text="Simple text editor for Windows with C# runtime compiler and code execution using Roslyn. Useful to run code on the fly and get instant result."/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="BioConvert" Content="Bionic Reader Convert" HorizontalAlignment="Left" Margin="53,393,0,0" VerticalAlignment="Top" Click="BioConvert_Click"/>
+        <Button x:Name="BioConvert" Content="Bionic Reader Convert" HorizontalAlignment="Left" Margin="53,388,0,0" VerticalAlignment="Top" Click="BioConvert_Click"/>
 
     </Grid>
 </Window>
