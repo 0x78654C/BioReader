@@ -1,2 +1,3 @@
 # BioReader
-Simple Bionic Reader.
+Simple Bionic Reader. Similar to https://bionic-reading.com/.
+Work in progress..
