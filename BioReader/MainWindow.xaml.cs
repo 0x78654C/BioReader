@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using BioRead = BioReader.Utils.Reader;
 
 namespace BioReader
@@ -26,22 +16,14 @@ namespace BioReader
         {
             InitializeComponent();
         }
-
-        private void bioTextConvertor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-          
-        }
-
         private void BioConvert_Click(object sender, RoutedEventArgs e)
         {
-              ApplyBionicReader(bioTextConvertor);
-          //  bioTextConvertor.Selection.Select
+            ApplyBionicReader(bioTextConvertor);
         }
 
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
             BioRead bioRead = new BioRead();
-            Paragraph paragraph = new Paragraph();
             string normalData = StringFromRichTextBox(richTextBox);
             if (string.IsNullOrEmpty(normalData))
                 return;
@@ -50,24 +32,45 @@ namespace BioReader
 
             foreach (var bioChars in firstCharaters)
             {
-                IEnumerable<TextRange> wordRanges = GetAllWordRanges(richTextBox.Document);
-                foreach (TextRange wordRange in wordRanges)
+                string pattern = @"[^\W\d](\w|[-']{1,2}(?=\w))*";
+                TextPointer pointer = richTextBox.Document.ContentStart;
+
+                while (pointer != null)
                 {
-                    if (wordRange.Text.Contains($"{bioChars}"))
+                    if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
                     {
-                        wordRange.ApplyPropertyValue(TextElement.ForegroundProperty, FontWeights.Bold);
+                        string textRun = pointer.GetTextInRun(LogicalDirection.Forward);
+                        MatchCollection matches = Regex.Matches(textRun, pattern);
+                        foreach (Match match in matches)
+                        {
+                            int startIndex = match.Index;
+                            int length = bioChars.Length;
+                            TextPointer start = pointer.GetPositionAtOffset(startIndex);
+                            TextPointer end = start.GetPositionAtOffset(length);
+                            if (end != null)
+                            {
+                                TextRange range = new TextRange(start, end);
+                                string word = range.Text;
+
+                                if (bioChars.Length == 1 && match.ToString().Length < 4 &&
+                                   match.ToString().Length > 1 && match.ToString().StartsWith(bioChars))
+                                {
+                                    richTextBox.Selection.Select(start, end);
+                                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                                }
+
+
+                                if (match.ToString().StartsWith(bioChars) && match.ToString().Length >= 3
+                                    && bioChars.Length > 1)
+                                {
+                                    richTextBox.Selection.Select(start, end);
+                                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                                }
+                            }
+                        }
                     }
+                    pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
                 }
-                //TextPointer text = richTextBox.Document.ContentStart;
-                //while (text.GetPointerContext(LogicalDirection.Forward) != TextPointerContext.Text)
-                //{
-                //    text = text.GetNextContextPosition(LogicalDirection.Forward);
-                //}
-                //TextPointer startPos = text.GetPositionAtOffset(5);
-                //TextPointer endPos = text.GetPositionAtOffset(7);
-                //var textRange = new TextRange(startPos, endPos);
-                //bioTextConvertor.Selection.Select(startPos, endPos);
-                //bioTextConvertor.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
             }
         }
 

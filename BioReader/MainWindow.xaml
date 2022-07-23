@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <RichTextBox FontSize="25" x:Name="bioTextConvertor" TextChanged="bioTextConvertor_TextChanged" Margin="0,0,0,60">
+        <RichTextBox FontSize="25" x:Name="bioTextConvertor" Margin="0,0,0,60">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="Simple text editor for Windows with C# runtime compiler and code execution using Roslyn. Useful to run code on the fly and get instant result."/>
