@@ -23,7 +23,7 @@ namespace BioReader
 
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
-            BioRead bioRead = new BioRead();
+            BioRead bioRead = new BioRead(); 
             string normalData = StringFromRichTextBox(richTextBox);
             if (string.IsNullOrEmpty(normalData))
                 return;
