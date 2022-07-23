@@ -5,8 +5,8 @@ namespace BioReaderTests
         [Test]
         public void Read_half_chars_from_words_fourOrMore_letters()
         {
-            string data = "Hello world everyone";
-            string outPut = "Hel wor ever";
+            string data = "Hello world everyone result";
+            string outPut = "Hel wor ever res";
             Br.Reader reader = new Br.Reader();
             reader.Data = data;
             Assert.That(outPut, Is.EqualTo(string.Join(" ", reader.GetHalfChars())));
@@ -17,6 +17,17 @@ namespace BioReaderTests
         {
             string data = "new set ov";
             string outPut = "n s o";
+            Br.Reader reader = new Br.Reader();
+            reader.Data = data;
+            Assert.That(outPut, Is.EqualTo(string.Join(" ", reader.GetHalfChars())));
+        }
+
+
+        [Test]
+        public void Read_half_chars_from_words_uppercase()
+        {
+            string data = "NEWFire SET Ov";
+            string outPut = "NEWF S O";
             Br.Reader reader = new Br.Reader();
             reader.Data = data;
             Assert.That(outPut, Is.EqualTo(string.Join(" ", reader.GetHalfChars())));

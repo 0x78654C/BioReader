@@ -19,11 +19,11 @@ namespace BioReader.Utils
         public List<string> GetHalfChars()
         {
             List<string> outPut = new List<string>();
-           
+
             if (Data.Length == 0)
                 return outPut;
 
-            using(StringReader reader = new StringReader(Data))
+            using (StringReader reader = new StringReader(Data))
             {
                 string line;
                 while (null != (line = reader.ReadLine()))
@@ -31,7 +31,7 @@ namespace BioReader.Utils
                     string[] letters = line.Split(" ");
                     foreach (var letter in letters)
                     {
-                        double split =(double)letter.Count() / 2;
+                        double split = (double)letter.Count() / 2;
                         string letterLengt = Math.Round(split, 2).ToString();
                         if (letterLengt.Contains("."))
                         {
@@ -44,7 +44,7 @@ namespace BioReader.Utils
                         if (letter.Length == 1)
                             split = 1;
                         int splitChars = Int32.Parse(split.ToString());
-                        outPut.Add(letter.Substring(0,splitChars));
+                        outPut.Add(letter.Substring(0, splitChars));
                     }
                 }
             }
