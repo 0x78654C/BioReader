@@ -15,6 +15,7 @@
             </FlowDocument>
         </RichTextBox>
         <Button x:Name="BioConvert" Content="Bionic Reader Convert" Margin="54,0,559,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18"/>
+        <Label Name="workStatusLbl" Content=" " Margin="333,383,454,25"/>
 
     </Grid>
 </Window>
