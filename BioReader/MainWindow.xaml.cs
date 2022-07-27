@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,17 +13,28 @@ namespace BioReader
     /// </summary>
     public partial class MainWindow : Window
     {
+        BackgroundWorker worker;
         public MainWindow()
         {
             InitializeComponent();
         }
         private void BioConvert_Click(object sender, RoutedEventArgs e)
         {
-            ApplyBionicReader(bioTextConvertor);
+            worker = new BackgroundWorker();
+            worker.DoWork += Do_Work;
+            worker.RunWorkerAsync();
+        }
+
+        private void Do_Work(object sender, DoWorkEventArgs e)
+        {
+            this.Dispatcher.Invoke(() => {
+                ApplyBionicReader(bioTextConvertor);
+            });
         }
 
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
+            workStatusLbl.Content = "Applying bionic reading...";
             BioRead bioRead = new BioRead(); 
             string normalData = StringFromRichTextBox(richTextBox);
             if (string.IsNullOrEmpty(normalData))
@@ -59,7 +71,6 @@ namespace BioReader
                                     richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
                                 }
 
-
                                 if (match.ToString().StartsWith(bioChars) && match.ToString().Length >= 3
                                     && bioChars.Length > 1)
                                 {
@@ -72,6 +83,7 @@ namespace BioReader
                     pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
                 }
             }
+            workStatusLbl.Content = "Done!";
         }
 
         public static IEnumerable<TextRange> GetAllWordRanges(FlowDocument document)
