@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace BioReader.Utils
 {
@@ -49,6 +51,25 @@ namespace BioReader.Utils
                 }
             }
             return outPut;
+        }
+
+        /// <summary>
+        /// Read data from richtextbox controler.
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns></returns>
+        public static string StringFromRichTextBox(RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(
+                // TextPointer to the start of content in the RichTextBox.
+                rtb.Document.ContentStart,
+                // TextPointer to the end of content in the RichTextBox.
+                rtb.Document.ContentEnd
+            );
+
+            // The Text property on a TextRange object returns a string
+            // representing the plain text content of the TextRange.
+            return textRange.Text;
         }
     }
 }
