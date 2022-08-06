@@ -4,18 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BioReader"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="BioReader" Height="619" Background="#f3f5f2" Width="1001" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
+
     <Grid>
-        <RichTextBox FontSize="25" x:Name="bioTextConvertor" Margin="0,0,0,60">
+        <Grid VerticalAlignment="Top" Height="50" Background="#f3f5f2" >
+            <Border BorderThickness="0 0 0.4 0" BorderBrush="#690fc2"/>
+            <TextBlock Text="BioReader Converter"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="20" Margin="0,10,0,10" Width="338" FontWeight="Bold"></TextBlock>
+            <StackPanel VerticalAlignment="Center">
+                <materialDesign:PopupBox Foreground="Black" HorizontalAlignment="Right"  Margin="0,9,7,9" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="26">
+                    <Border BorderBrush="#690fc2" BorderThickness="1">
+                        <StackPanel Width="150" Background="#f3f5f2">
+                            <Button Content="About" VerticalContentAlignment="Center" FontSize="18" Click="aboutBTN_Click"/>
+                            <Separator/>
+                            <Button Content="Exit" VerticalContentAlignment="Center" FontSize="18" Click="closeBTN_Click"/>
+                        </StackPanel>
+                    </Border>
+                </materialDesign:PopupBox>
+            </StackPanel>
+            <Label Name="miniMizeLBL" Content="_" PreviewMouseDown="minimizeLBL_PreviewMouseDown" FontSize="25" Foreground="Black" HorizontalAlignment="Left" Margin="1020,-3,0,0" VerticalAlignment="Top"/>
+        </Grid>
+        <RichTextBox FontSize="25" x:Name="bioTextConvertor" Margin="0,50,0,67" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="Simple text editor for Windows with C# runtime compiler and code execution using Roslyn. Useful to run code on the fly and get instant result."/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="BioConvert" Content="Bionic Reader Convert" Margin="54,0,559,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18"/>
-        <Label Name="workStatusLbl" Content=" " Margin="333,383,454,25"/>
+        <Button Style="{DynamicResource RoundCorner2}" x:Name="BioConvert" Content="Convert" Margin="117,0,777,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18"/>
+        <Label Name="workStatusLbl" Content=" " Margin="240,571,256,0" Height="31" VerticalAlignment="Top"/>
+        <materialDesign:PackIcon Name="OpenFile" ToolTip="Open file" Foreground="#690fc2" Kind="FolderOpen" Margin="10,573,0,0" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" FontWeight="Bold" PreviewMouseDown="OpenFile_PreviewMouseDown"/>
+        <materialDesign:PackIcon x:Name="SaveFile" ToolTip="Save file" Foreground="#690fc2" Kind="ContentSave" Margin="58,573,0,0" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="SaveFile_PreviewMouseDown" />
 
     </Grid>
 </Window>
