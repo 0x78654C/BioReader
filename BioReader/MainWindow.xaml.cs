@@ -2,9 +2,11 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using BioRead = BioReader.Utils.Reader;
+using FileManage = BioReader.Utils.FileManagement;
 
 namespace BioReader
 {
@@ -32,13 +34,18 @@ namespace BioReader
             });
         }
 
+        /// <summary>
+        /// Convert text to bionic reading.
+        /// </summary>
+        /// <param name="richTextBox"></param>
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
-            workStatusLbl.Content = "Applying bionic reading...";
+            workStatusLbl.Content = string.Empty;
             BioRead bioRead = new BioRead(); 
-            string normalData = StringFromRichTextBox(richTextBox);
+            string normalData = BioRead.StringFromRichTextBox(richTextBox);
             if (string.IsNullOrEmpty(normalData))
                 return;
+            workStatusLbl.Content = "Applying bionic reading...";
             bioRead.Data = normalData;
             List<string> firstCharaters = bioRead.GetHalfChars();
 
@@ -109,18 +116,63 @@ namespace BioReader
             }
         }
 
-        private string StringFromRichTextBox(RichTextBox rtb)
-        {
-            TextRange textRange = new TextRange(
-                // TextPointer to the start of content in the RichTextBox.
-                rtb.Document.ContentStart,
-                // TextPointer to the end of content in the RichTextBox.
-                rtb.Document.ContentEnd
-            );
 
-            // The Text property on a TextRange object returns a string
-            // representing the plain text content of the TextRange.
-            return textRange.Text;
+        /// <summary>
+        /// Minimize button(label)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void minimizeLBL_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        /// <summary>
+        /// About window open button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutBTN_Click(object sender, RoutedEventArgs e)
+        {
+         //   var aB = new about();
+           // aB.ShowDialog();
+        }
+
+        /// <summary>
+        /// Close wpf form button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeBTN_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();//close the app
+        }
+
+        /// <summary>
+        /// Drag window on mouse click left
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+
+        }
+
+        /// <summary>
+        /// Open file in rich text box.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FileManage.OpenFile(bioTextConvertor);
+        }
+
+        private void SaveFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FileManage.SaveFile(bioTextConvertor);
         }
     }
 }
