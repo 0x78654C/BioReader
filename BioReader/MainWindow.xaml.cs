@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using BioRead = BioReader.Utils.Reader;
 using FileManage = BioReader.Utils.FileManagement;
+using System.Windows.Threading;
+using System;
 
 namespace BioReader
 {
@@ -16,9 +18,12 @@ namespace BioReader
     public partial class MainWindow : Window
     {
         BackgroundWorker worker;
+        DispatcherTimer dispatcherTimer;
         public MainWindow()
         {
             InitializeComponent();
+            dispatcherTimer = new DispatcherTimer();
+            workStatusLbl.Content = string.Empty;
         }
         private void BioConvert_Click(object sender, RoutedEventArgs e)
         {
@@ -27,9 +32,21 @@ namespace BioReader
             worker.RunWorkerAsync();
         }
 
+        private void ClearStatusMessage(DispatcherTimer dispatcherTimer)
+        {
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Start();
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            workStatusLbl.Content = string.Empty;
+        }
         private void Do_Work(object sender, DoWorkEventArgs e)
         {
-            this.Dispatcher.Invoke(() => {
+            this.Dispatcher.Invoke(() =>
+            {
                 ApplyBionicReader(bioTextConvertor);
             });
         }
@@ -41,7 +58,7 @@ namespace BioReader
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
             workStatusLbl.Content = string.Empty;
-            BioRead bioRead = new BioRead(); 
+            BioRead bioRead = new BioRead();
             string normalData = BioRead.StringFromRichTextBox(richTextBox);
             if (string.IsNullOrEmpty(normalData))
                 return;
@@ -91,6 +108,7 @@ namespace BioReader
                 }
             }
             workStatusLbl.Content = "Done!";
+            ClearStatusMessage(dispatcherTimer);
         }
 
         public static IEnumerable<TextRange> GetAllWordRanges(FlowDocument document)
@@ -118,13 +136,30 @@ namespace BioReader
 
 
         /// <summary>
-        /// Minimize button(label)
+        /// Minimize icon event.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void minimizeLBL_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void Minimize_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        /// <summary>
+        /// Maximimize icon event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Maximize_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
+                return;
+            }
+            WindowState = WindowState.Normal;
+            MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
         }
 
         /// <summary>
@@ -134,8 +169,8 @@ namespace BioReader
         /// <param name="e"></param>
         private void aboutBTN_Click(object sender, RoutedEventArgs e)
         {
-         //   var aB = new about();
-           // aB.ShowDialog();
+            var about = new About();
+            about.ShowDialog();
         }
 
         /// <summary>
