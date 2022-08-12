@@ -9,7 +9,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="#690fc2" BorderThickness="0">
+                        <Border x:Name="border" Background="#393D3D" BorderThickness="0">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
                             </Border.Effect>
@@ -21,11 +21,11 @@
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="Gray"></Setter>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#9F0FC3"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="#373939"></Setter>
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="White"></Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#8D0FC3"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="#2D2F2F"></Setter>
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="White"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
