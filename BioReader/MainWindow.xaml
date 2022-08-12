@@ -9,12 +9,12 @@
         Title="BioReader" Height="619" Background="#f3f5f2" Width="1001" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <Grid VerticalAlignment="Top" Height="50" Background="#f3f5f2" >
-            <Border BorderThickness="0 0 0.4 0" BorderBrush="#690fc2"/>
-            <TextBlock Text="BioReader Converter"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="20" Margin="0,10,0,10" Width="338" FontWeight="Bold"></TextBlock>
+        <Grid VerticalAlignment="Top" Height="50" Background="#393D3D" >
+            <Border BorderThickness="0 0 0.4 0" BorderBrush="#393D3D"/>
+            <TextBlock Text="BioReader Converter"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="20" Margin="0,10,0,10" Width="338" FontWeight="Bold"></TextBlock>
             <StackPanel VerticalAlignment="Center">
-                <materialDesign:PopupBox Foreground="Black" HorizontalAlignment="Right"  Margin="0,9,7,9" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="26">
-                    <Border BorderBrush="#690fc2" BorderThickness="1">
+                <materialDesign:PopupBox Foreground="White" HorizontalAlignment="Right"  Margin="0,9,7,9" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Width="28" Height="31">
+                    <Border BorderBrush="#393D3D" BorderThickness="1">
                         <StackPanel Width="150" Background="#f3f5f2">
                             <Button Content="About" VerticalContentAlignment="Center" FontSize="18" Click="aboutBTN_Click"/>
                             <Separator/>
@@ -23,7 +23,8 @@
                     </Border>
                 </materialDesign:PopupBox>
             </StackPanel>
-            <Label Name="miniMizeLBL" Content="_" PreviewMouseDown="minimizeLBL_PreviewMouseDown" FontSize="25" Foreground="Black" HorizontalAlignment="Left" Margin="1020,-3,0,0" VerticalAlignment="Top"/>
+            <materialDesign:PackIcon x:Name="MaximizeWindow" ToolTip="Maximize" Foreground="White" Kind="WindowMaximize" Margin="0,14,37,0" Width="24" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="Maximize_PreviewMouseDown" HorizontalAlignment="Right"/>
+            <materialDesign:PackIcon x:Name="MinimizeWindow" ToolTip="Minimize" Foreground="White" Kind="WindowMinimize"  Width="24" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="Minimize_PreviewMouseDown" HorizontalAlignment="Right" Margin="0,20,73,0"/>
         </Grid>
         <RichTextBox FontSize="25" x:Name="bioTextConvertor" Margin="0,50,0,67" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <FlowDocument>
@@ -32,10 +33,9 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button Style="{DynamicResource RoundCorner2}" x:Name="BioConvert" Content="Convert" Margin="117,0,777,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18"/>
-        <Label Name="workStatusLbl" Content=" " Margin="240,571,256,0" Height="31" VerticalAlignment="Top"/>
-        <materialDesign:PackIcon Name="OpenFile" ToolTip="Open file" Foreground="#690fc2" Kind="FolderOpen" Margin="10,573,0,0" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" FontWeight="Bold" PreviewMouseDown="OpenFile_PreviewMouseDown"/>
-        <materialDesign:PackIcon x:Name="SaveFile" ToolTip="Save file" Foreground="#690fc2" Kind="ContentSave" Margin="58,573,0,0" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="SaveFile_PreviewMouseDown" />
-
+        <Button Style="{DynamicResource RoundCorner2}" x:Name="BioConvert" Content="Convert" Margin="117,0,0,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18" HorizontalAlignment="Left" Width="107"/>
+        <Label Name="workStatusLbl" FontSize="20" Content="workStatusLbl" Margin="248,0,259,20" Height="34" VerticalAlignment="Bottom"/>
+        <materialDesign:PackIcon Name="OpenFile" ToolTip="Open file" Foreground="#393D3D" Kind="FolderOpen" Margin="10,0,0,20" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" FontWeight="Bold" PreviewMouseDown="OpenFile_PreviewMouseDown" VerticalAlignment="Bottom"/>
+        <materialDesign:PackIcon x:Name="SaveFile" ToolTip="Save file" Foreground="#393D3D" Kind="ContentSave"  Width="26" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="SaveFile_PreviewMouseDown" VerticalAlignment="Bottom" Margin="56,0,0,20"/>
     </Grid>
 </Window>
