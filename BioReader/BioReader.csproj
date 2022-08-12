@@ -5,6 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Copyright>Copyright @ 2022 x__Coding</Copyright>
+    <Description>Simple Bionic Reader. Similar to https://bionic-reading.com/. </Description>
   </PropertyGroup>
 
   <ItemGroup>
