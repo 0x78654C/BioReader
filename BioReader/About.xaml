@@ -13,7 +13,7 @@
             <TextBlock Text="About Me"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Margin="246,6,261,4" Width="91"/>
             <Label Name="miniMizeLBL" Content="_" FontSize="26" Foreground="#FFE1DDE2" HorizontalAlignment="Right" Margin="0,-15,12,0" VerticalAlignment="Top" Height="46" PreviewMouseDown="minimizeLBL_PreviewMouseDown" />
         </Grid>
-        <Button Name="closeBTNMSG" Foreground="#FFE1DDEE" Style="{DynamicResource RoundCorner2}"  Content="Close" HorizontalAlignment="Left" Margin="488,398,0,0" VerticalAlignment="Top" Width="100" Height="42" Click="closeBTNMSG_Click"/>
+        <Button Name="closeBTNMSG" Foreground="#FFE1DDEE" Style="{DynamicResource RoundCorner2}" FontSize="18" Content="Close" HorizontalAlignment="Left" Margin="488,398,0,0" VerticalAlignment="Top" Width="100" Height="42" Click="closeBTNMSG_Click"/>
         <Label Name="assamblyNameLBL" Content="Name" FontSize="16"  Foreground="Black"  HorizontalAlignment="Right" Margin="0,50,296,0" VerticalAlignment="Top" Height="46" Width="292" />
         <Label Name="versionNameLBL" Content="Version" FontSize="16"  Foreground="Black"  HorizontalAlignment="Right" Margin="0,96,326,0" VerticalAlignment="Top" Height="46" Width="262" />
         <Label Name="copyRightLBL" Content="CopyRight" FontSize="16"  Foreground="Black"  HorizontalAlignment="Right" Margin="0,147,10,0" VerticalAlignment="Top" Height="46" Width="578" />
