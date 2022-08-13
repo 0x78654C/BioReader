@@ -9,7 +9,7 @@
         Title="About" Height="450" Background="#f3f5f2" ResizeMode="NoResize" WindowStyle="None" Width="600"  MouseDown="Window_MouseDown" WindowStartupLocation="CenterScreen">
     <Grid>
         <Border BorderBrush="#393D3D" BorderThickness="1"/>
-        <Grid VerticalAlignment="Top" Height="39" Background="#393D3D" >
+        <Grid VerticalAlignment="Top" Height="39" Background="#06B612" >
             <TextBlock Text="About Me"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Margin="246,6,261,4" Width="91"/>
             <Label Name="miniMizeLBL" Content="_" FontSize="26" Foreground="#FFE1DDE2" HorizontalAlignment="Right" Margin="0,-15,12,0" VerticalAlignment="Top" Height="46" PreviewMouseDown="minimizeLBL_PreviewMouseDown" />
         </Grid>
