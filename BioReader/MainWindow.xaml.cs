@@ -19,12 +19,19 @@ namespace BioReader
     {
         BackgroundWorker worker;
         DispatcherTimer dispatcherTimer;
+        private const int defaultFontSize = 16; //default content size for richtextbox
         public MainWindow()
         {
             InitializeComponent();
             dispatcherTimer = new DispatcherTimer();
             workStatusLbl.Content = string.Empty;
         }
+
+        /// <summary>
+        /// Start bionic reader convertor in background.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BioConvert_Click(object sender, RoutedEventArgs e)
         {
             worker = new BackgroundWorker();
@@ -32,17 +39,33 @@ namespace BioReader
             worker.RunWorkerAsync();
         }
 
+
+        /// <summary>
+        /// Set timer for clear convertion status after 3 seconds.
+        /// </summary>
+        /// <param name="dispatcherTimer"></param>
         private void ClearStatusMessage(DispatcherTimer dispatcherTimer)
         {
             dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
         }
 
+        /// <summary>
+        /// Clear convertion status.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             workStatusLbl.Content = string.Empty;
         }
+
+        /// <summary>
+        /// Background function for start bionic reader convertor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Do_Work(object sender, DoWorkEventArgs e)
         {
             this.Dispatcher.Invoke(() =>
@@ -111,29 +134,6 @@ namespace BioReader
             ClearStatusMessage(dispatcherTimer);
         }
 
-        public static IEnumerable<TextRange> GetAllWordRanges(FlowDocument document)
-        {
-            string pattern = @"[^\W\d](\w|[-']{1,2}(?=\w))*";
-            TextPointer pointer = document.ContentStart;
-            while (pointer != null)
-            {
-                if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                {
-                    string textRun = pointer.GetTextInRun(LogicalDirection.Forward);
-                    MatchCollection matches = Regex.Matches(textRun, pattern);
-                    foreach (Match match in matches)
-                    {
-                        int startIndex = match.Index;
-                        int length = match.Length;
-                        TextPointer start = pointer.GetPositionAtOffset(startIndex);
-                        TextPointer end = start.GetPositionAtOffset(length);
-                        yield return new TextRange(start, end);
-                    }
-                }
-                pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
-            }
-        }
-
 
         /// <summary>
         /// Minimize icon event.
@@ -156,10 +156,12 @@ namespace BioReader
             {
                 WindowState = WindowState.Maximized;
                 MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
+                MaximizeLbl.ToolTip = "Normal";
                 return;
             }
             WindowState = WindowState.Normal;
             MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
+            MaximizeLbl.ToolTip = "Maximize";
         }
 
         /// <summary>
@@ -205,9 +207,19 @@ namespace BioReader
             FileManage.OpenFile(bioTextConvertor);
         }
 
+        /// <summary>
+        /// Save file to rtf format.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             FileManage.SaveFile(bioTextConvertor);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            bioTextConvertor.FontSize = defaultFontSize + (int)e.NewValue;
         }
     }
 }
