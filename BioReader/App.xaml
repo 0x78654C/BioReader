@@ -9,7 +9,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="#393D3D" BorderThickness="0">
+                        <Border x:Name="border" Background="#06B612" BorderThickness="0">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
                             </Border.Effect>
@@ -21,11 +21,11 @@
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="Gray"></Setter>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#373939"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="#05A410"></Setter>
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="White"></Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#2D2F2F"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="#028D0B"></Setter>
                                 <Setter TargetName="cp" Property="TextBlock.Foreground" Value="White"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -33,6 +33,93 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="RichBorderEfect" TargetType="{x:Type RichTextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RichTextBox">
+                        <Border x:Name="border" Background="White" BorderThickness="1">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border  BorderThickness="1" BorderBrush="Gray" Background="Gray" Height="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border SnapsToDevicePixels="True" Background="Green"  BorderThickness="1" BorderBrush="Green" Height="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderThumb" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse Height="15" Width="15" Fill="#06B612"></Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="Slider"  TargetType="Slider">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Track Grid.Row="1" x:Name="PART_Track"   >
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource SliderThumb}"  />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="Horizontal_Slider" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="MinHeight" Value="21" />
+                    <Setter Property="MinWidth" Value="104" />
+                    <Setter Property="Template" Value="{StaticResource Slider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <ResourceDictionary x:Key="MaterialDesign">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
