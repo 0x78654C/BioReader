@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using BioRead = BioReader.Utils.Reader;
 using FileManage = BioReader.Utils.FileManagement;
+using GlobalVariable = BioReader.Utils.GlobalVariables;
 using System.Windows.Threading;
 using System;
 
@@ -19,7 +21,6 @@ namespace BioReader
     {
         BackgroundWorker worker;
         DispatcherTimer dispatcherTimer;
-        private const int defaultFontSize = 16; //default content size for richtextbox
         public MainWindow()
         {
             InitializeComponent();
@@ -130,7 +131,7 @@ namespace BioReader
                     pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
                 }
             }
-            workStatusLbl.Content = "Done!";
+            workStatusLbl.Content = "Finished converting!";
             ClearStatusMessage(dispatcherTimer);
         }
 
@@ -219,7 +220,42 @@ namespace BioReader
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            bioTextConvertor.FontSize = defaultFontSize + (int)e.NewValue;
+            //bioTextConvertor.FontSize = defaultFontSize + (int)e.NewValue;
+            bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize + (double)e.NewValue);
+        }
+
+        private void bioTextConvertor_Drop(object sender, DragEventArgs e)
+        {
+            bioTextConvertor.SetBackgroundRTB(true);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] data = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (data != null && data.Length > 0)
+                {
+                    if (data[0].EndsWith(".rtf"))
+                    {
+                        FileManage.LoadRTFPackage(bioTextConvertor, data[0]);
+                        GlobalVariable.defaultFontSize = bioTextConvertor.FontSize;
+                    }
+                    else
+                    {
+                        FileManage.LoadDataRichTextBox(bioTextConvertor, data[0], true);
+                        GlobalVariable.defaultFontSize = 16;
+                    }
+                }
+            }
+        }
+
+        private void bioTextConvertor_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+            bioTextConvertor.SetBackgroundRTB(false);
+        }
+
+        private void bioTextConvertor_PreviewDragLeave(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
+            bioTextConvertor.SetBackgroundRTB(true);
         }
     }
 }
