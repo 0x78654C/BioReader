@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Documents;
 using BioRead = BioReader.Utils.Reader;
 using System.Windows;
@@ -23,19 +24,35 @@ namespace BioReader.Utils
             s_openFileDialog.Filter = "Text files (*.txt)|*.txt|Rich Text Format (*.rtf)|*.rtf";
             s_openFileDialog.Title = "Select file to open in convertor";
             Nullable<bool> result = s_openFileDialog.ShowDialog();
-            richTextBox.Document.Blocks.Clear();
             if (result == true)
             {
+                richTextBox.Document.Blocks.Clear();
                 string filePath = s_openFileDialog.FileName;
                 if (filePath.EndsWith(".rtf"))
                 {
                     LoadRTFPackage(richTextBox, filePath);
                     return;
                 }
-                var paragraph = new Paragraph();
-                paragraph.Inlines.Add(File.ReadAllText(s_openFileDialog.FileName));
-                richTextBox.Document.Blocks.Add(paragraph);
+                LoadDataRichTextBox(richTextBox, s_openFileDialog.FileName, true);
             }
+        }
+
+        /// <summary>
+        /// Load data in richtextbox
+        /// </summary>
+        /// <param name="richTextBox">Richtextbox controler.</param>
+        /// <param name="data">Data to be loaded(text/file path)</param>
+        /// <param name="path">Enable/Disable read data from file.</param>
+        public static void LoadDataRichTextBox(RichTextBox richTextBox, string data, bool path)
+        {
+            richTextBox.Document.Blocks.Clear();
+            var paragraph = new Paragraph();
+            if (path)
+                paragraph.Inlines.Add(File.ReadAllText(data));
+            else
+                paragraph.Inlines.Add(data);
+
+            richTextBox.Document.Blocks.Add(paragraph);
         }
 
         /// <summary>
@@ -61,7 +78,7 @@ namespace BioReader.Utils
         /// </summary>
         /// <param name="richTextBox"></param>
         /// <param name="fileName"></param>
-        private static void RichTextBoxSave(RichTextBox richTextBox,string fileName)
+        private static void RichTextBoxSave(RichTextBox richTextBox, string fileName)
         {
             try
             {
@@ -74,9 +91,9 @@ namespace BioReader.Utils
                 MessageBox.Show($"Data saved to: {fileName}", "BioReader", MessageBoxButton.OK,
         MessageBoxImage.Information);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                MessageBox.Show($"Error: {e.Message}", "BioReader",MessageBoxButton.OK,
+                MessageBox.Show($"Error: {e.Message}", "BioReader", MessageBoxButton.OK,
         MessageBoxImage.Error);
             }
         }
@@ -85,7 +102,7 @@ namespace BioReader.Utils
         /// </summary>
         /// <param name="richTextBox"></param>
         /// <param name="fileName"></param>
-        private static void LoadRTFPackage(RichTextBox richTextBox, string fileName)
+        public static void LoadRTFPackage(RichTextBox richTextBox, string fileName)
         {
             TextRange range;
             FileStream fStream;
@@ -93,6 +110,7 @@ namespace BioReader.Utils
             {
                 range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
                 fStream = new FileStream(fileName, FileMode.OpenOrCreate);
+                GlobalVariables.defaultFontSize = richTextBox.FontSize;
                 range.Load(fStream, DataFormats.Rtf);
                 fStream.Close();
             }
