@@ -19,7 +19,7 @@ namespace BioReader.Utils
         /// Open file.
         /// </summary>
         /// <param name="richTextBox"></param>
-        public static void OpenFile(RichTextBox richTextBox)
+        public static void OpenFile(RichTextBox richTextBox,Slider slider)
         {
             s_openFileDialog.Filter = "Text files (*.txt)|*.txt|Rich Text Format (*.rtf)|*.rtf";
             s_openFileDialog.Title = "Select file to open in convertor";
@@ -31,9 +31,13 @@ namespace BioReader.Utils
                 if (filePath.EndsWith(".rtf"))
                 {
                     LoadRTFPackage(richTextBox, filePath);
+                    richTextBox.SetFontSizeRTB(GlobalVariables.defaultFontSize);
+                    slider.Value = 0;
                     return;
                 }
                 LoadDataRichTextBox(richTextBox, s_openFileDialog.FileName, true);
+                richTextBox.SetFontSizeRTB(GlobalVariables.defaultFontSize);
+                slider.Value = 0;
             }
         }
 
@@ -110,8 +114,8 @@ namespace BioReader.Utils
             {
                 range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
                 fStream = new FileStream(fileName, FileMode.OpenOrCreate);
-                GlobalVariables.defaultFontSize = richTextBox.FontSize;
                 range.Load(fStream, DataFormats.Rtf);
+                richTextBox.FontSize = 16;
                 fStream.Close();
             }
         }
