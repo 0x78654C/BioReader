@@ -2,22 +2,6 @@ namespace BioReaderTests
 {
     public class Tests
     {
-        [Test]
-        public void Read_string_from_richtextbox()
-        {
-            string data = "Hello world!";
-            string readData = string.Empty;
-            Application.Current.Dispatcher.Invoke((Action)delegate
-            {
-                RichTextBox richTextBox = new RichTextBox();
-                Paragraph paragraph = new Paragraph();
-                paragraph.Inlines.Add(data);
-                richTextBox.Document.Blocks.Add(paragraph);
-                readData = Br.Reader.StringFromRichTextBox(richTextBox);
-            });
-            Assert.That(data, Is.EqualTo(readData));
-        }
-
 
         [Test]
         public void Read_half_chars_from_words_fourOrMore_letters()
