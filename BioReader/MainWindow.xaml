@@ -10,7 +10,7 @@
 
     <Grid>
         <Border BorderBrush="#393D3D" BorderThickness="1"/>
-        <Grid VerticalAlignment="Top" Height="50" Background="#06B612" >
+        <Grid VerticalAlignment="Top" Height="50" Background="#06B612" MouseDown="Grid_MouseDown" >
             <Border BorderThickness="0 0 0.4 0" BorderBrush="#393D3D"/>
             <TextBlock Text="BioReader Converter"  TextAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="20" Margin="0,10,0,10" Width="338" FontWeight="Bold"></TextBlock>
             <StackPanel VerticalAlignment="Center">
@@ -37,7 +37,7 @@
             </FlowDocument>
         </RichTextBox>
         <Button Style="{DynamicResource RoundCorner2}" x:Name="BioConvert" Content="Convert" Margin="117,0,0,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18" HorizontalAlignment="Left" Width="107"/>
-        <Label Name="workStatusLbl" FontSize="20" Content="workStatusLbl" Margin="248,0,451,20" Height="34" VerticalAlignment="Bottom"/>
+        <Label Name="workStatusLbl" FontSize="20" Content="workStatusLbl" Margin="248,0,451,14" Height="39" VerticalAlignment="Bottom"/>
         <materialDesign:PackIcon Name="OpenFile" ToolTip="Open file" Foreground="#06B612" Kind="FolderOpen" Margin="10,0,0,20" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" FontWeight="Bold" PreviewMouseDown="OpenFile_PreviewMouseDown" VerticalAlignment="Bottom"/>
         <materialDesign:PackIcon x:Name="SaveFile" ToolTip="Save file" Foreground="#06B612" Kind="ContentSave"  Width="26" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="SaveFile_PreviewMouseDown" VerticalAlignment="Bottom" Margin="56,0,0,20"/>
         <Slider Style="{DynamicResource Horizontal_Slider}" Name="ZoomSlider" Margin="0,0,19,23" IsSelectionRangeEnabled="True" VerticalAlignment="Bottom" Width="120"  HorizontalAlignment="Right" ValueChanged="Slider_ValueChanged"  RenderTransformOrigin="0.5,0.5" />

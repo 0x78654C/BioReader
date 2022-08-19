@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -21,6 +20,8 @@ namespace BioReader
     {
         BackgroundWorker worker;
         DispatcherTimer dispatcherTimer;
+        private int _clicks = 0;
+        private bool _clickMaximize = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -143,6 +144,7 @@ namespace BioReader
         /// <param name="e"></param>
         private void Minimize_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            _clickMaximize = true;
             WindowState = WindowState.Minimized;
         }
 
@@ -153,6 +155,7 @@ namespace BioReader
         /// <param name="e"></param>
         private void Maximize_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            _clickMaximize = true;
             if (WindowState == WindowState.Normal)
             {
                 WindowState = WindowState.Maximized;
@@ -205,7 +208,7 @@ namespace BioReader
         /// <param name="e"></param>
         private void OpenFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            FileManage.OpenFile(bioTextConvertor);
+            FileManage.OpenFile(bioTextConvertor, ZoomSlider);
         }
 
         /// <summary>
@@ -218,12 +221,22 @@ namespace BioReader
             FileManage.SaveFile(bioTextConvertor);
         }
 
+        /// <summary>
+        /// Zoom in/out event on richtextbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //bioTextConvertor.FontSize = defaultFontSize + (int)e.NewValue;
             bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize + (double)e.NewValue);
         }
 
+
+        /// <summary>
+        /// Drop file load event for RTB and txt.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bioTextConvertor_Drop(object sender, DragEventArgs e)
         {
             bioTextConvertor.SetBackgroundRTB(true);
@@ -235,27 +248,89 @@ namespace BioReader
                     if (data[0].EndsWith(".rtf"))
                     {
                         FileManage.LoadRTFPackage(bioTextConvertor, data[0]);
-                        GlobalVariable.defaultFontSize = bioTextConvertor.FontSize;
+                        bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize);
+                        ZoomSlider.Value = 0;
                     }
                     else
                     {
                         FileManage.LoadDataRichTextBox(bioTextConvertor, data[0], true);
-                        GlobalVariable.defaultFontSize = 16;
+                        bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize);
+                        ZoomSlider.Value = 0;
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Change richtextbox background on drag over to gray.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bioTextConvertor_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
             bioTextConvertor.SetBackgroundRTB(false);
         }
 
+        /// <summary>
+        /// Change richtextbox background on drag leave to white.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bioTextConvertor_PreviewDragLeave(object sender, DragEventArgs e)
         {
             e.Handled = true;
             bioTextConvertor.SetBackgroundRTB(true);
+        }
+
+        /// <summary>
+        /// Double click maximize event on title bar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ResetClickCounters(dispatcherTimer);
+            if (_clickMaximize)
+                _clickMaximize = false;
+            else
+                _clicks++;
+            if (_clicks == 2)
+            {
+                if (WindowState == WindowState.Normal)
+                {
+                    WindowState = WindowState.Maximized;
+                    MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
+                    MaximizeLbl.ToolTip = "Normal";
+                    _clicks = 0;
+                    return;
+                }
+                WindowState = WindowState.Normal;
+                MaximizeWindow.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
+                MaximizeLbl.ToolTip = "Maximize";
+                _clicks = 0;
+            }
+        }
+
+        /// <summary>
+        /// Set timer for clear clicks for maximize window to 1 second.
+        /// </summary>
+        /// <param name="dispatcherTimer"></param>
+        private void ResetClickCounters(DispatcherTimer dispatcherTimer)
+        {
+            dispatcherTimer.Tick += DispatcherTimerReset_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+
+        /// <summary>
+        /// Clear clicks on title bar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DispatcherTimerReset_Tick(object sender, EventArgs e)
+        {
+            _clicks = 0;
         }
     }
 }
