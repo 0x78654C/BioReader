@@ -22,6 +22,7 @@ namespace BioReader
         DispatcherTimer dispatcherTimer;
         private int _clicks = 0;
         private bool _clickMaximize = false;
+        TextRange range;
         public MainWindow()
         {
             InitializeComponent();
@@ -70,10 +71,7 @@ namespace BioReader
         /// <param name="e"></param>
         private void Do_Work(object sender, DoWorkEventArgs e)
         {
-            this.Dispatcher.Invoke(() =>
-            {
-                ApplyBionicReader(bioTextConvertor);
-            });
+            ApplyBionicReader(bioTextConvertor);
         }
 
         /// <summary>
@@ -82,57 +80,18 @@ namespace BioReader
         /// <param name="richTextBox"></param>
         private void ApplyBionicReader(RichTextBox richTextBox)
         {
-            workStatusLbl.Content = string.Empty;
+            Dispatcher.Invoke(() => { workStatusLbl.Content = string.Empty; });
             BioRead bioRead = new BioRead();
             string normalData = BioRead.StringFromRichTextBox(richTextBox);
+            bioRead.Data = normalData;
             if (string.IsNullOrEmpty(normalData))
                 return;
-            workStatusLbl.Content = "Applying bionic reading...";
-            bioRead.Data = normalData;
-            List<string> firstCharaters = bioRead.GetHalfChars();
-
-            foreach (var bioChars in firstCharaters)
+            Dispatcher.Invoke(() =>
             {
-                string pattern = @"[^\W\d](\w|[-']{1,2}(?=\w))*";
-                TextPointer pointer = richTextBox.Document.ContentStart;
-
-                while (pointer != null)
-                {
-                    if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                    {
-                        string textRun = pointer.GetTextInRun(LogicalDirection.Forward);
-                        MatchCollection matches = Regex.Matches(textRun, pattern);
-                        foreach (Match match in matches)
-                        {
-                            int startIndex = match.Index;
-                            int length = bioChars.Length;
-                            TextPointer start = pointer.GetPositionAtOffset(startIndex);
-                            TextPointer end = start.GetPositionAtOffset(length);
-                            if (end != null)
-                            {
-                                TextRange range = new TextRange(start, end);
-                                string word = range.Text;
-
-                                if (bioChars.Length == 1 && match.ToString().Length < 4 &&
-                                   match.ToString().Length > 1 && match.ToString().StartsWith(bioChars))
-                                {
-                                    richTextBox.Selection.Select(start, end);
-                                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-                                }
-
-                                if (match.ToString().StartsWith(bioChars) && match.ToString().Length >= 3
-                                    && bioChars.Length > 1)
-                                {
-                                    richTextBox.Selection.Select(start, end);
-                                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-                                }
-                            }
-                        }
-                    }
-                    pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
-                }
-            }
-            workStatusLbl.Content = "Finished converting!";
+                workStatusLbl.Content = "Applying bionic reading...";
+                bioRead.ApplyBionic(richTextBox);
+            });
+            Dispatcher.Invoke(() => { workStatusLbl.Content = "Finished converting!"; });
             ClearStatusMessage(dispatcherTimer);
         }
 
