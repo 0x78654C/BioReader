@@ -5,7 +5,11 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioReader", "BioReader\BioReader.csproj", "{8CF3FBB9-AB0A-4DDA-AC78-0D8DF395586A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioReaderTests", "BioReaderTests\BioReaderTests.csproj", "{42134FFA-76EE-4E5A-95AE-8B8BCF2150C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioReaderTests", "BioReaderTests\BioReaderTests.csproj", "{42134FFA-76EE-4E5A-95AE-8B8BCF2150C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioReaderCLI", "BioReaderCLI\BioReaderCLI.csproj", "{1441C1B2-00B5-4104-A9F8-D945A3AEA127}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioLib", "BioLib\BioLib.csproj", "{34F1E81A-AEA6-419E-92D1-235373A02100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{42134FFA-76EE-4E5A-95AE-8B8BCF2150C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42134FFA-76EE-4E5A-95AE-8B8BCF2150C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42134FFA-76EE-4E5A-95AE-8B8BCF2150C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1441C1B2-00B5-4104-A9F8-D945A3AEA127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1441C1B2-00B5-4104-A9F8-D945A3AEA127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1441C1B2-00B5-4104-A9F8-D945A3AEA127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1441C1B2-00B5-4104-A9F8-D945A3AEA127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F1E81A-AEA6-419E-92D1-235373A02100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F1E81A-AEA6-419E-92D1-235373A02100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F1E81A-AEA6-419E-92D1-235373A02100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F1E81A-AEA6-419E-92D1-235373A02100}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
