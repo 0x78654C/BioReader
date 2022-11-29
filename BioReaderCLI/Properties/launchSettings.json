@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BioReaderCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "hello world"
+    }
+  }
+}
