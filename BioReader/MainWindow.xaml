@@ -29,13 +29,7 @@
             <materialDesign:PackIcon x:Name="MaximizeWindow" Foreground="White" Kind="WindowMaximize" Margin="0,14,37,0" Width="24" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="Maximize_PreviewMouseDown" HorizontalAlignment="Right"/>
             <materialDesign:PackIcon x:Name="MinimizeWindow" Foreground="White" Kind="WindowMinimize"  Width="24" Height="26" RenderTransformOrigin="0.556,-0.722" PreviewMouseDown="Minimize_PreviewMouseDown" HorizontalAlignment="Right" Margin="0,20,73,0"/>
         </Grid>
-        <RichTextBox FontSize="16" x:Name="bioTextConvertor" AllowDrop="True" Margin="0,50,0,67" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Drop="bioTextConvertor_Drop" PreviewDragOver="bioTextConvertor_PreviewDragOver" PreviewDragLeave="bioTextConvertor_PreviewDragLeave">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="Simple text editor for Windows with C# runtime compiler and code execution using Roslyn. Useful to run code on the fly and get instant result."/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <RichTextBox FontSize="16" x:Name="bioTextConvertor" AllowDrop="True" Margin="0,50,0,67" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Drop="bioTextConvertor_Drop" PreviewDragOver="bioTextConvertor_PreviewDragOver" PreviewDragLeave="bioTextConvertor_PreviewDragLeave"/>
         <Button Style="{DynamicResource RoundCorner2}" x:Name="BioConvert" Content="Convert" Margin="117,0,0,15" Click="BioConvert_Click" Height="36" VerticalAlignment="Bottom" FontSize="18" HorizontalAlignment="Left" Width="107"/>
         <Label Name="workStatusLbl" FontSize="20" Content="workStatusLbl" Margin="248,0,451,14" Height="39" VerticalAlignment="Bottom"/>
         <materialDesign:PackIcon Name="OpenFile" ToolTip="Open file" Foreground="#06B612" Kind="FolderOpen" Margin="10,0,0,20" Width="25" Height="26" RenderTransformOrigin="0.556,-0.722" FontWeight="Bold" PreviewMouseDown="OpenFile_PreviewMouseDown" VerticalAlignment="Bottom"/>
