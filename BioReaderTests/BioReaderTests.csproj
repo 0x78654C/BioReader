@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BioLib\BioLib.csproj" />
     <ProjectReference Include="..\BioReader\BioReader.csproj" />
   </ItemGroup>
 
