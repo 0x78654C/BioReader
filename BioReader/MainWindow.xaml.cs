@@ -22,7 +22,6 @@ namespace BioReader
         DispatcherTimer dispatcherTimer;
         private int _clicks = 0;
         private bool _clickMaximize = false;
-        TextRange range;
         public MainWindow()
         {
             InitializeComponent();
@@ -82,10 +81,6 @@ namespace BioReader
         {
             Dispatcher.Invoke(() => { workStatusLbl.Content = string.Empty; });
             BioRead bioRead = new BioRead();
-            string normalData = BioRead.StringFromRichTextBox(richTextBox);
-            bioRead.Data = normalData;
-            if (string.IsNullOrEmpty(normalData))
-                return;
             Dispatcher.Invoke(() =>
             {
                 workStatusLbl.Content = "Applying bionic reading...";
