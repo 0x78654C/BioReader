@@ -1,22 +1,8 @@
-﻿using MaterialDesignThemes.Wpf.Converters;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Threading;
 using Bio = BioLib.Reader;
 
 namespace BioReader.Utils
@@ -53,7 +39,7 @@ namespace BioReader.Utils
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        private string ConvertStringToRtf(StringBuilder builder) => @"{\rtf1\ansi " + builder.ToString() + " }";
+        private string ConvertStringToRtf(StringBuilder builder) => @"{\rtf1\utf8 " + builder.ToString() + " }";
 
         /// <summary>
         /// Apply bionic reader converstion.

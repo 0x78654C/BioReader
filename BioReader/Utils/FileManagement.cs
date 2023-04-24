@@ -1,11 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Documents;
 using BioRead = BioReader.Utils.Reader;
-using System.Windows;
 
 namespace BioReader.Utils
 {
@@ -19,7 +18,7 @@ namespace BioReader.Utils
         /// Open file.
         /// </summary>
         /// <param name="richTextBox"></param>
-        public static void OpenFile(RichTextBox richTextBox,Slider slider)
+        public static void OpenFile(RichTextBox richTextBox, Slider slider)
         {
             s_openFileDialog.Filter = "Text files (*.txt)|*.txt|Rich Text Format (*.rtf)|*.rtf";
             s_openFileDialog.Title = "Select file to open in convertor";

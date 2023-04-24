@@ -17,7 +17,7 @@ namespace BioReaderTests
         {
             string data = string.Empty;
             string outPut = string.Empty;
-           Assert.That(outPut, Is.EqualTo(string.Join(" ", reader.GetHalfChars(data).Values)));
+            Assert.That(outPut, Is.EqualTo(string.Join(" ", reader.GetHalfChars(data).Values)));
         }
     }
 }

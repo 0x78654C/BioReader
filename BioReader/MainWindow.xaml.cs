@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Threading;
 using BioRead = BioReader.Utils.Reader;
 using FileManage = BioReader.Utils.FileManagement;
 using GlobalVariable = BioReader.Utils.GlobalVariables;
-using System.Windows.Threading;
-using System;
 
 namespace BioReader
 {
@@ -58,20 +55,15 @@ namespace BioReader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            workStatusLbl.Content = string.Empty;
-        }
-
+        private void DispatcherTimer_Tick(object sender, EventArgs e) => workStatusLbl.Content = string.Empty;
+   
         /// <summary>
         /// Background function for start bionic reader convertor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Do_Work(object sender, DoWorkEventArgs e)
-        {
-            ApplyBionicReader(bioTextConvertor);
-        }
+        private void Do_Work(object sender, DoWorkEventArgs e) => ApplyBionicReader(bioTextConvertor);
+  
 
         /// <summary>
         /// Convert text to bionic reading.
@@ -138,10 +130,8 @@ namespace BioReader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeBTN_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();//close the app
-        }
+        private void closeBTN_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();//close the app
+
 
         /// <summary>
         /// Drag window on mouse click left
@@ -160,30 +150,24 @@ namespace BioReader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OpenFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            FileManage.OpenFile(bioTextConvertor, ZoomSlider);
-        }
+        private void OpenFile_PreviewMouseDown(object sender, MouseButtonEventArgs e) => FileManage.OpenFile(bioTextConvertor, ZoomSlider);
+
 
         /// <summary>
         /// Save file to rtf format.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveFile_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            FileManage.SaveFile(bioTextConvertor);
-        }
+        private void SaveFile_PreviewMouseDown(object sender, MouseButtonEventArgs e) => FileManage.SaveFile(bioTextConvertor);
+
 
         /// <summary>
         /// Zoom in/out event on richtextbox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize + (double)e.NewValue);
-        }
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => bioTextConvertor.SetFontSizeRTB(GlobalVariable.defaultFontSize + (double)e.NewValue);
+
 
 
         /// <summary>
@@ -282,9 +266,6 @@ namespace BioReader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DispatcherTimerReset_Tick(object sender, EventArgs e)
-        {
-            _clicks = 0;
-        }
+        private void DispatcherTimerReset_Tick(object sender, EventArgs e) => _clicks = 0;
     }
 }
