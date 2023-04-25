@@ -1,7 +1,8 @@
 {
   "profiles": {
     "BioReader": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "Hello world"
     }
   }
 }
